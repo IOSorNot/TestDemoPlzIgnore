@@ -1,18 +1,18 @@
 //
-//  CheckListTests.m
-//  CheckListTests
+//  ChecklistsTests.m
+//  ChecklistsTests
 //
-//  Created by SH205 on 14-9-25.
-//  Copyright (c) 2014年 blablabla. All rights reserved.
+//  Created by Matthijs on 30-09-13.
+//  Copyright (c) 2013 Razeware LLC. All rights reserved.
 //
 
 #import <XCTest/XCTest.h>
 
-@interface CheckListTests : XCTestCase
+@interface ChecklistsTests : XCTestCase
 
 @end
 
-@implementation CheckListTests
+@implementation ChecklistsTests
 
 - (void)setUp
 {

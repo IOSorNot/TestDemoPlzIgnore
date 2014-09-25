@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "2E46A95319D3A8E800A8EA10"
-               BuildableName = "CheckList.app"
-               BlueprintName = "CheckList"
-               ReferencedContainer = "container:CheckList.xcodeproj">
+               BlueprintIdentifier = "7B6CA3C217F967DD00E68B4B"
+               BuildableName = "Checklists.app"
+               BlueprintName = "Checklists"
+               ReferencedContainer = "container:Checklists.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -32,20 +32,20 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "2E46A97419D3A8E800A8EA10"
-               BuildableName = "CheckListTests.xctest"
-               BlueprintName = "CheckListTests"
-               ReferencedContainer = "container:CheckList.xcodeproj">
+               BlueprintIdentifier = "7B6CA3E317F967DD00E68B4B"
+               BuildableName = "ChecklistsTests.xctest"
+               BlueprintName = "ChecklistsTests"
+               ReferencedContainer = "container:Checklists.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "2E46A95319D3A8E800A8EA10"
-            BuildableName = "CheckList.app"
-            BlueprintName = "CheckList"
-            ReferencedContainer = "container:CheckList.xcodeproj">
+            BlueprintIdentifier = "7B6CA3C217F967DD00E68B4B"
+            BuildableName = "Checklists.app"
+            BlueprintName = "Checklists"
+            ReferencedContainer = "container:Checklists.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -61,10 +61,10 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "2E46A95319D3A8E800A8EA10"
-            BuildableName = "CheckList.app"
-            BlueprintName = "CheckList"
-            ReferencedContainer = "container:CheckList.xcodeproj">
+            BlueprintIdentifier = "7B6CA3C217F967DD00E68B4B"
+            BuildableName = "Checklists.app"
+            BlueprintName = "Checklists"
+            ReferencedContainer = "container:Checklists.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -79,10 +79,10 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "2E46A95319D3A8E800A8EA10"
-            BuildableName = "CheckList.app"
-            BlueprintName = "CheckList"
-            ReferencedContainer = "container:CheckList.xcodeproj">
+            BlueprintIdentifier = "7B6CA3C217F967DD00E68B4B"
+            BuildableName = "Checklists.app"
+            BlueprintName = "Checklists"
+            ReferencedContainer = "container:Checklists.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
