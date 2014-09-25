@@ -102,26 +102,38 @@
   [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
-- (IBAction)addItem
-{
-  NSInteger newRowIndex = [_items count];
-
-  ChecklistItem *item = [[ChecklistItem alloc] init];
-  item.text = @"I am a new row";
-  item.checked = NO;
-  [_items addObject:item];
-
-  NSIndexPath *indexPath = [NSIndexPath indexPathForRow:newRowIndex inSection:0];//将int类型的index转换为indexPath类型，为了插入数组方便；
-  NSArray *indexPaths = @[indexPath];
-  [self.tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];//通知view有新的数据变更，如果view和model的数据不匹配，那么会报错；
-}
-
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
   [_items removeObjectAtIndex:indexPath.row];
 
   NSArray *indexPaths = @[indexPath];
-  [tableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];//前一行创建的临时array单纯的只是为了此行的插入而已。
+  [tableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
+}
+
+- (void)addItemViewControllerDidCancel:(AddItemViewController *)controller
+{
+  [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)addItemViewController:(AddItemViewController *)controller didFinishAddingItem:(ChecklistItem *)item
+{
+  NSInteger newRowIndex = [_items count];
+  [_items addObject:item];
+
+  NSIndexPath *indexPath = [NSIndexPath indexPathForRow:newRowIndex inSection:0];
+  NSArray *indexPaths = @[indexPath];
+  [self.tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
+
+  [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+  if ([segue.identifier isEqualToString:@"AddItem"]) {
+    UINavigationController *navigationController = segue.destinationViewController;
+    AddItemViewController *controller = (AddItemViewController *)navigationController.topViewController;
+    controller.delegate = self;
+  }
 }
 
 @end
