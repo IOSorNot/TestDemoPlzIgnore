@@ -18,6 +18,15 @@
   NSMutableArray *_items;
 }
 
+- (NSString * )documentsDirectory{
+    NSArray * paths = NSSearchPathForDirectoriesInDomains(NSDocumentationDirectory, NSUserDomainMask, YES);
+    NSString * documentsDirectory = [paths firstObject];
+    return documentsDirectory;
+}
+
+-(NSString *)dataFilePath {
+    return [[self documentsDirectory]stringByAppendingPathComponent:@"Checklists.plist"];
+}
 - (void)viewDidLoad
 {
   [super viewDidLoad];
@@ -65,11 +74,12 @@
 
 - (void)configureCheckmarkForCell:(UITableViewCell *)cell withChecklistItem:(ChecklistItem *)item
 {
-  if (item.checked) {
-    cell.accessoryType = UITableViewCellAccessoryCheckmark;
-  } else {
-    cell.accessoryType = UITableViewCellAccessoryNone;
-  }
+    UILabel *label = (UILabel *)[cell viewWithTag:1001];
+    if (item.checked) {
+        label.text = @"√";
+    } else {
+        label.text = @"";
+    }
 }
 
 - (void)configureTextForCell:(UITableViewCell *)cell withChecklistItem:(ChecklistItem *)item
@@ -102,6 +112,7 @@
   [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
+
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
   [_items removeObjectAtIndex:indexPath.row];
@@ -109,31 +120,40 @@
   NSArray *indexPaths = @[indexPath];
   [tableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
 }
-
-- (void)addItemViewControllerDidCancel:(AddItemViewController *)controller
-{
-  [self dismissViewControllerAnimated:YES completion:nil];
+-(void)itemDetailViewControllerDidCancel:(ItemDetailViewController *)controller{
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void)addItemViewController:(AddItemViewController *)controller didFinishAddingItem:(ChecklistItem *)item
-{
-  NSInteger newRowIndex = [_items count];
-  [_items addObject:item];
-
-  NSIndexPath *indexPath = [NSIndexPath indexPathForRow:newRowIndex inSection:0];
-  NSArray *indexPaths = @[indexPath];
-  [self.tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
-
-  [self dismissViewControllerAnimated:YES completion:nil];
+-(void)itemDetailViewController:(ItemDetailViewController *)controller didFinishAddingItem:(ChecklistItem *)item{
+    NSInteger newRowIndex = [_items count];
+    [_items addObject:item];
+    NSIndexPath * indexPath = [NSIndexPath indexPathForRow:newRowIndex inSection:0];
+    NSArray * indexPaths = @[indexPath];
+    [self.tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+-(void)itemDetailViewController:(ItemDetailViewController *)controller didFinishEditingItem:(ChecklistItem *)item{
+    NSInteger index = [_items indexOfObject:item];//取得item对应的index
+    NSIndexPath * indexPath = [NSIndexPath indexPathForItem:index inSection:0];//转换为indexPath格式
+    UITableViewCell * cell = [self.tableView cellForRowAtIndexPath:indexPath];//通过indexpath取得cell的地址
+    [self configureTextForCell:cell withChecklistItem:item];//重新设置cell的内容
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-  if ([segue.identifier isEqualToString:@"AddItem"]) {
-    UINavigationController *navigationController = segue.destinationViewController;
-    AddItemViewController *controller = (AddItemViewController *)navigationController.topViewController;
-    controller.delegate = self;
-  }
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    if ([segue.identifier isEqualToString:@"AddItem"]) {
+        UINavigationController * navigationController = segue.destinationViewController;//  destination VC 不是addVC 而是导航c
+        ItemDetailViewController * controller = (ItemDetailViewController *)navigationController.topViewController;// 得到导航C的屏幕最前激活的界面，好麻烦
+        controller.delegate = self;
+    }
+    else if ([segue.identifier isEqualToString:@"EditItem"]){
+        UINavigationController *navigationController = segue.destinationViewController;
+        ItemDetailViewController *controller = (ItemDetailViewController *)navigationController.topViewController;
+        controller.delegate = self;
+        NSIndexPath * indexPath = [self.tableView indexPathForCell:sender];
+        controller.itemToEdit = _items[indexPath.row];
+        
+    }
 }
-
 @end
